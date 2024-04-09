@@ -25,6 +25,11 @@
                 android:text="搜索"/>
     </LinearLayout>
 
+<!--    <FrameLayout-->
+<!--        android:id="@+id/search_result_fragment_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        />-->
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"

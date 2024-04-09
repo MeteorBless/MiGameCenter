@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MiGameCenter"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".SearchActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 <!--        <activity android:name=".MainActivity"/>-->
-        <activity android:name=".SearchActivity"/>
+<!--        <activity android:name=".SearchActivity"/>-->
     </application>
 
 </manifest>

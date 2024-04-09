@@ -78,6 +78,7 @@ public class SearchActivity extends FragmentActivity {
         keywords = getIntent().getStringExtra("keywords");
         String hint_ =  getIntent().getStringExtra("hint");
         etGameKeywords.setHint(hint_);
+
         // 执行搜索操作
         if (keywords != null && !keywords.isEmpty()) {
 
