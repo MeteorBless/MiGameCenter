@@ -10,4 +10,8 @@
     <string name="string_recommend">推荐</string>
     <string name="string_search_text">疯狂跳一跳2</string>
     <string name="string_login">点击登录</string>
+    <string name="string_result_is_null">暂无搜索结果</string>
+    <string name="string_search">搜索</string>
+    <string name="string_back">返回</string>
+    <string name="string_instant_play">秒玩</string>
 </resources>

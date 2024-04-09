@@ -32,16 +32,16 @@ public class HomeFragment extends Fragment {
         editText = view.findViewById(R.id.edittext1);
 
         // 设置触摸事件监听器
-//        editText.setOnTouchListener((v, event) -> {
-//            // 检查触摸事件是否在右侧图标上
-//            if (event.getAction() == MotionEvent.ACTION_UP &&
-//                    event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2].getBounds().width())) {
-//                // 在这里执行页面跳转的逻辑
-//                startActivity(new Intent(getContext(), SearchActivity.class));
-//                return true;
-//            }
-//            return false;
-//        });
+        editText.setOnTouchListener((v, event) -> {
+            // 检查触摸事件是否在右侧图标上
+            if (event.getAction() == MotionEvent.ACTION_UP &&
+                    event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2].getBounds().width())) {
+                // 在这里执行页面跳转的逻辑
+                startActivity(new Intent(requireContext(), SearchActivity.class));
+                return true;
+            }
+            return false;
+        });
 
         editText = view.findViewById(R.id.edittext1);
         editText.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.drawable_padding));
@@ -50,16 +50,17 @@ public class HomeFragment extends Fragment {
 
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                String keywords = editText.getText().toString().trim();
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                String hint_ = editText.getHint().toString().trim();
-                intent.putExtra("keywords", keywords);
-                intent.putExtra("hint",hint_);
-                requireActivity().startActivity(intent);
+//                String keywords = editText.getText().toString().trim();
+                Intent intent = new Intent(requireContext(), SearchActivity.class);
+//                String hint_ = editText.getHint().toString().trim();
+//                intent.putExtra("keywords", keywords);
+//                intent.putExtra("hint",hint_);
+                requireContext().startActivity(intent);
                 return true;
             }
             return false;
         });
+
 
 
         return view;

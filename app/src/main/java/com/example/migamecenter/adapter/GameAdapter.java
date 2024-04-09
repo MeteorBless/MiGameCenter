@@ -16,16 +16,12 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.migamecenter.R;
 import com.example.migamecenter.bean.GameInfo;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-//    private static final int TYPE_ONE = 0;
-//    private static final int TYPE_TWO = 1;
-//    private static final int TYPE_THREE = 2;
-
-//    private Set<GameInfo> gameInfoSet = new HashSet<>(); // 使用 Set 来去重
 
     private List<GameInfo> gameInfoList = new ArrayList<>();
 
@@ -40,20 +36,6 @@ public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return new ArrayList<>(gameInfoList);
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        // 根据位置或数据来确定每个项目的类型
-////        GameInfo gameInfo = gameInfoList.get(position);
-//        // 假设类型一是偶数位置，类型二是奇数位置，类型三是其他位置
-//        if (position % 3 == 1) {
-//            return TYPE_ONE;
-//        } else if (position % 3 == 2) {
-//            return TYPE_ONE;
-//        } else {
-//            return TYPE_THREE;
-//        }
-//    }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,11 +45,27 @@ public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return new TypeOneViewHolder(itemView);
 
     }
+    public interface OnItemClickListener {
+        void onItemClick(GameInfo gameInfo);
+    }
+    private final OnItemClickListener listener;
+
+    // 在构造函数中传入点击事件监听器
+    public GameAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         GameInfo gameInfo = gameInfoList.get(position);
         ((TypeOneViewHolder) holder).bindTypeOne(gameInfo);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 调用接口方法处理点击事件
+                listener.onItemClick(gameInfo);
+            }
+        });
     }
 
     @Override
@@ -82,11 +80,14 @@ public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final TextView gameNameTextView;
         private final TextView briefTextView;
 
+        private final TextView tagsTextView;
+
         public TypeOneViewHolder(@NonNull View itemView) {
             super(itemView);
             gameIconImageView = itemView.findViewById(R.id.game_icon_image_view);
             gameNameTextView = itemView.findViewById(R.id.game_name_text_view);
             briefTextView = itemView.findViewById(R.id.brief_text_view);
+            tagsTextView = itemView.findViewById(R.id.tags_text_view);
         }
 
         public void bindTypeOne(GameInfo gameInfo) {
@@ -95,6 +96,7 @@ public class GameAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .into(gameIconImageView);
             gameNameTextView.setText(gameInfo.gameName);
             briefTextView.setText(gameInfo.brief);
+            tagsTextView.setText(gameInfo.tags);
         }
     }
 
