@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/nav_home"
+    android:title="@string/string_recommend"
+    android:icon="@drawable/icon_recommend" />
+<item
+    android:id="@+id/nav_my"
+    android:title="@string/string_my"
+    android:icon="@drawable/icon_my" />
+</menu>

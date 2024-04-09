@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#80FFFFFF" android:state_pressed="false" />
+    <!-- 被点击状态 -->
+    <item android:color="#40FFFFFF" android:state_pressed="true" />
+</selector>

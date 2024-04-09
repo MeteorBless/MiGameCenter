@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MiGameCenter</string>
+    <string name="string_littleGame_splash">小游戏</string>
+    <string name="string_app_slogan">随时随地 想玩就玩</string>
+    <string name="string_tv_terms_and_conditions">欢迎使用小游戏，我们将严格遵守相关法律和隐私政策以保护您的个人信息。请您阅读并同意《用户协议》与《隐私协议》。</string>
+    <string name="string_disagree">不同意</string>
+    <string name="string_agree_and_use">同意并使用</string>
+    <string name="string_tv_content">声明与条款</string>
+    <string name="string_my">我的</string>
+    <string name="string_recommend">推荐</string>
+    <string name="string_search_text">疯狂跳一跳2</string>
+    <string name="string_login">点击登录</string>
+</resources>
