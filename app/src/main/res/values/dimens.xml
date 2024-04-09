@@ -4,4 +4,9 @@
 
     <!-- Drawable padding for EditText and similar views -->
     <dimen name="drawable_padding">16dp</dimen>
+
+    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="margin_start">10dp</dimen>
+    <dimen name="margin_end">10dp</dimen>
+
 </resources>

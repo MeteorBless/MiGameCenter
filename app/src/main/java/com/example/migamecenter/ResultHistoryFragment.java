@@ -2,6 +2,9 @@ package com.example.migamecenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -73,16 +77,40 @@ public class ResultHistoryFragment extends Fragment {
         historyLayout.removeAllViews(); // 清空历史记录布局
 
         // 循环遍历搜索历史记录，并添加到布局中
-        for (String history : searchHistoryList) {
+//        for (String history : searchHistoryList) {
+//            TextView historyTextView = new TextView(requireContext());
+//
+//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+//                    ViewGroup.LayoutParams.WRAP_CONTENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT
+//            );
+//            layoutParams.setMargins(0, 0, 0, 16); // 设置每个历史记录之间的间距
+//            historyTextView.setLayoutParams(layoutParams);
+//            historyTextView.setText(trimStringIfNeeded(history)); // 如果字符串长度超过 15，截取并加上 "..."
+//            historyLayout.addView(historyTextView);
+//        }
+        // 循环遍历搜索历史记录，并添加到布局中
+        for (String history : searchHistoryList){
             TextView historyTextView = new TextView(requireContext());
+
+            // 创建一个圆角矩形
+            GradientDrawable backgroundDrawable = new GradientDrawable();
+            backgroundDrawable.setCornerRadius(getResources().getDimension(R.dimen.corner_radius));
+            backgroundDrawable.setColor(Color.parseColor("#f7f7f7"));
+
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-            layoutParams.setMargins(0, 0, 0, 16); // 设置每个历史记录之间的间距
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            // 设置背景
+            historyTextView.setBackground(backgroundDrawable);
+
+            layoutParams.setMargins(10, 5, 10, 5); // 设置每个历史记录之间的间距
             historyTextView.setLayoutParams(layoutParams);
             historyTextView.setText(trimStringIfNeeded(history)); // 如果字符串长度超过 15，截取并加上 "..."
             historyLayout.addView(historyTextView);
+
+
         }
     }
 
