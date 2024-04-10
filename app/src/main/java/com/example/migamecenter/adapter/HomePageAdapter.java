@@ -142,6 +142,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
 
+        @SuppressLint("SetTextI18n")
         public void bindStyleOne(HomePageInfo homePageInfo) {
             if (homePageInfo.gameInfoList != null && !homePageInfo.gameInfoList.isEmpty()) {
                 int size = 6;
@@ -151,7 +152,9 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .transform(new RoundedCorners(50))
                             .into(gameIconImageViewList.get(i));
                     gameNameTextViewList.get(i).setText(gameInfo.gameName);
-                    gamePlayNumTextViewList.get(i).setText(gameInfo.playNumFormat);
+                    if(gameInfo.playNumFormat!=null){
+                        gamePlayNumTextViewList.get(i).setText(gameInfo.playNumFormat+"人正在玩");
+                    }
                 }
             } else {
                 Log.i("HomePageAdapter", "gameInfoList为空");
@@ -189,6 +192,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         }
 
+        @SuppressLint("SetTextI18n")
         public void bindStyleTwo(HomePageInfo homePageInfo) {
             if (homePageInfo.gameInfoList != null && !homePageInfo.gameInfoList.isEmpty()) {
                 int size = 8;
@@ -198,7 +202,10 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .transform(new RoundedCorners(50))
                             .into(gameIconImageViewList.get(i));
                     gameNameTextViewList.get(i).setText(gameInfo.gameName);
-                    gamePlayNumTextViewList.get(i).setText(gameInfo.playNumFormat);
+                    if(gameInfo.playNumFormat!=null){
+                        gamePlayNumTextViewList.get(i).setText(gameInfo.playNumFormat+"人正在玩");
+                    }
+
                 }
             } else {
                 Log.i("HomePageAdapter", "gameInfoList为空");
