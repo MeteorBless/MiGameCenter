@@ -65,6 +65,13 @@
                 android:text="在线人数"
                 />
 
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
+                />
+
         </LinearLayout>
 
         <LinearLayout
@@ -103,6 +110,13 @@
                 android:text="在线人数"
                 />
 
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
+                />
+
         </LinearLayout>
 
         <LinearLayout
@@ -138,6 +152,12 @@
                 android:gravity="center"
                 android:textSize="9.33sp"
                 android:text="在线人数"
+                />
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
                 />
 
         </LinearLayout>
@@ -176,12 +196,19 @@
                 android:textSize="9.33sp"
                 android:text="在线人数"
                 />
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
+                />
 
         </LinearLayout>
 
+
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -224,6 +251,12 @@
                 android:textSize="9.33sp"
                 android:text="在线人数"
                 />
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
+                />
 
         </LinearLayout>
 
@@ -260,6 +293,12 @@
                 android:gravity="center"
                 android:textSize="9.33sp"
                 android:text="在线人数"
+                />
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
                 />
 
         </LinearLayout>
@@ -298,6 +337,12 @@
                 android:textSize="9.33sp"
                 android:text="在线人数"
                 />
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
+                />
 
         </LinearLayout>
 
@@ -334,6 +379,12 @@
                 android:gravity="center"
                 android:textSize="9.33sp"
                 android:text="在线人数"
+                />
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/icon_instant_play"
                 />
 
         </LinearLayout>

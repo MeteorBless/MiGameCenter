@@ -203,7 +203,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             .into(gameIconImageViewList.get(i));
                     gameNameTextViewList.get(i).setText(gameInfo.gameName);
                     if(gameInfo.playNumFormat!=null){
-                        gamePlayNumTextViewList.get(i).setText(gameInfo.playNumFormat+"人正在玩");
+                        gamePlayNumTextViewList.get(i).setText(gameInfo.tags);
                     }
 
                 }
