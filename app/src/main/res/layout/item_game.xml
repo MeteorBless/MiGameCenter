@@ -60,7 +60,7 @@
         android:text="@string/string_instant_play"
         android:textAppearance="@style/style_button_instant_play"
         android:background="@drawable/bg_button_play"
-        android:layout_gravity="end"
+        android:layout_gravity="end|center_vertical"
         android:layout_marginEnd="16.67dp"
         />
 

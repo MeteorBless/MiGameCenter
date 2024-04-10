@@ -61,7 +61,7 @@ public class ResultIsNotNullFragment extends Fragment implements GameAdapter.OnI
         recyclerView = rootView.findViewById(R.id.recycler_view_search_result);
         adapter = new GameAdapter(this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -108,7 +108,7 @@ public class ResultIsNotNullFragment extends Fragment implements GameAdapter.OnI
                             // 刷新列表
                             adapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(getActivity(), "已加载完所有搜索结果", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireActivity(), "已加载完所有搜索结果", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -120,7 +120,7 @@ public class ResultIsNotNullFragment extends Fragment implements GameAdapter.OnI
                     @Override
                     public void run() {
                         isLoading = false;
-                        Toast.makeText(getActivity(), "网络请求失败: " + errMsg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireActivity(), "网络请求失败: " + errMsg, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -148,5 +148,6 @@ public class ResultIsNotNullFragment extends Fragment implements GameAdapter.OnI
         intent.putExtra("gameInfo", gameInfo);
         requireContext().startActivity(intent);
     }
+
 }
 

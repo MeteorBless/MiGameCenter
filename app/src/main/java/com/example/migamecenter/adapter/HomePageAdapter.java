@@ -37,6 +37,9 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
+    public List<HomePageInfo> getCurrentHomePageList()
+    {return new ArrayList<>(homePageInfoList);}
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -122,7 +125,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             gameNameTextViewList = new ArrayList<>();
             gamePlayNumTextViewList = new ArrayList<>();
 
-            // Find and add the ImageView and TextView for each game item
             for (int i = 0; i < 6; i++) {
                 ImageView gameIconImageView = itemView.findViewById(
                         itemView.getResources().getIdentifier("game_icon_image_view_" + i,
@@ -170,7 +172,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             gameNameTextViewList = new ArrayList<>();
             gamePlayNumTextViewList = new ArrayList<>();
 
-            // Find and add the ImageView and TextView for each game item
             for (int i = 0; i < 8; i++) {
                 ImageView gameIconImageView = itemView.findViewById(
                         itemView.getResources().getIdentifier("game_icon_image_view_" + i,
@@ -206,19 +207,57 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public static class StyleThreeViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView gameIconImageView;
+        private final List<ImageView> gameIconImageViewList;
+        private final List<TextView> gameNameTextViewList;
+        private final List<TextView> briefTextViewList;
+
+        private final List<TextView> tagsTextViewList;
 
         public StyleThreeViewHolder(@NonNull View itemView) {
             super(itemView);
-            gameIconImageView = itemView.findViewById(R.id.game_icon_image_view);
+            gameIconImageViewList = new ArrayList<>();
+            gameNameTextViewList = new ArrayList<>();
+            briefTextViewList = new ArrayList<>();
+            tagsTextViewList = new ArrayList<>();
+
+            for (int i = 0; i < 4; i++) {
+                ImageView gameIconImageView = itemView.findViewById(
+                        itemView.getResources().getIdentifier("game_icon_image_view_" + i,
+                                "id", itemView.getContext().getPackageName()));
+                TextView gameNameTextView = itemView.findViewById(
+                        itemView.getResources().getIdentifier("game_name_text_view_" + i,
+                                "id", itemView.getContext().getPackageName()));
+                TextView briefTextView = itemView.findViewById(
+                        itemView.getResources().getIdentifier("brief_text_view_" + i,
+                                "id", itemView.getContext().getPackageName()));
+                TextView tagsTextView = itemView.findViewById(
+                        itemView.getResources().getIdentifier("tags_text_view_" + i,
+                                "id", itemView.getContext().getPackageName()));
+
+                gameIconImageViewList.add(gameIconImageView);
+                gameNameTextViewList.add(gameNameTextView);
+                briefTextViewList.add(briefTextView);
+                tagsTextViewList.add(tagsTextView);
+            }
+
         }
 
         public void bindStyleThree(HomePageInfo homePageInfo) {
-            Glide.with(itemView.getContext()).load(homePageInfo.gameInfoList.get(0).icon)
-                    .transform(new RoundedCorners(50))
-                    .into(gameIconImageView);
+            if (homePageInfo.gameInfoList != null && !homePageInfo.gameInfoList.isEmpty()) {
+                int size = 4;
+                for (int i = 0; i < size; i++) {
+                    GameInfo gameInfo = homePageInfo.gameInfoList.get(i);
+                    Glide.with(itemView.getContext()).load(gameInfo.icon)
+                            .transform(new RoundedCorners(50))
+                            .into(gameIconImageViewList.get(i));
+                    gameNameTextViewList.get(i).setText(gameInfo.gameName);
+                    briefTextViewList.get(i).setText(gameInfo.brief);
+                    tagsTextViewList.get(i).setText(gameInfo.tags);
+                }
+            } else {
+                Log.i("HomePageAdapter", "gameInfoList为空");
+            }
         }
     }
-
 
 }

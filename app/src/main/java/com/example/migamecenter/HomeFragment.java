@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +27,10 @@ import com.example.migamecenter.bean.Page;
 import com.example.migamecenter.httpUtils.HttpManager;
 import com.example.migamecenter.httpUtils.NetCallBack;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HomeFragment extends Fragment {
     private EditText editText;
@@ -58,12 +62,29 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
 
+        editText = view.findViewById(R.id.edittext1);
+        editText.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.drawable_padding));
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+
+
+        bindListener();
+        // 显示主页
+        fetchData();
+        return view;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void bindListener(){
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // 下拉刷新
-                currentPage = 1;
-                fetchData();
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fetchData();
+                    }
+                });
             }
         });
 
@@ -71,12 +92,17 @@ public class HomeFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if ((!recyclerView.canScrollVertically(1)&&!isLoading)){
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                assert layoutManager != null;
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                Log.i("layoutManager.itemCount","条目总数量为："+totalItemCount);
+                if (!isLoading && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
                     loadMoreData();
                 }
             }
         });
-
 
         // 设置触摸事件监听器
         editText.setOnTouchListener((v, event) -> {
@@ -90,11 +116,6 @@ public class HomeFragment extends Fragment {
             return false;
         });
 
-        editText = view.findViewById(R.id.edittext1);
-        editText.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.drawable_padding));
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-
         editText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 //                String keywords = editText.getText().toString().trim();
@@ -107,65 +128,91 @@ public class HomeFragment extends Fragment {
             }
             return false;
         });
-
-        // 显示主页
-        fetchData();
-        return view;
     }
 
     private void fetchData() {
-        isLoading = true;
+        currentPage = 1;
+
         HttpManager.getInstance().searchHomePage(currentPage, PAGE_SIZE, new NetCallBack<BaseGameBean<Page<HomePageInfo>>>() {
             @Override
             public void onSuccess(BaseGameBean<Page<HomePageInfo>> data) {
-                requireActivity().runOnUiThread(() -> {
-                    List<HomePageInfo> homePageInfoList = data.data.records;
-
-                    if (!homePageInfoList.isEmpty()&&currentPage==1){
-                        adapter.setHomePageInfoList(homePageInfoList);
-                    }else if(currentPage!=1){
-                        adapter.addHomePageInfoList(homePageInfoList);
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (data.data!=null){
+                            adapter.setHomePageInfoList(data.data.records);
+                        }else{
+                            Toast.makeText(requireActivity(),"数据为空",Toast.LENGTH_SHORT).show();
+                        }
+                        swipeRefreshLayout.setRefreshing(false);
                     }
-//                    Log.i("HomeFragment","数据records大小为"+data.data.records.size());
-//                    Log.i("HomeFragment","数据gameInfoList0大小为"+data.data.records.get(0).gameInfoList.size());
-//                    Log.i("HomeFragment","数据gameInfoList0大小style为"+data.data.records.get(0).style);
-//                    Log.i("HomeFragment","数据gameInfoList1大小为"+data.data.records.get(1).gameInfoList.size());
-//                    Log.i("HomeFragment","数据gameInfoList1大小style为"+data.data.records.get(1).style);
-
-                    isLoading = false;
-                    swipeRefreshLayout.setRefreshing(false);
-                    currentPage++;
                 });
             }
 
             @Override
             public void onFailure(int errorCode, String errorMsg) {
-                Log.e("HomeFragment", "Network request failed: " + errorMsg);
-                isLoading = false;
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(requireActivity(),"网络请求失败"+errorMsg,Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
             }
         });
     }
+
 
     private void loadMoreData() {
-        isLoading = true;
-        HttpManager.getInstance().searchHomePage(currentPage, PAGE_SIZE, new NetCallBack<BaseGameBean<Page<HomePageInfo>>>() {
-            @Override
-            public void onSuccess(BaseGameBean<Page<HomePageInfo>> data) {
-                requireActivity().runOnUiThread(() -> {
-                    List<HomePageInfo> homePageInfoList = data.data.records;
-                    Log.i("HomeFragment","数据为"+data.data.records.get(0).gameInfoList.toArray().length);
-                    isLoading = false;
-                    currentPage++;
-                });
-            }
+        if (!isLoading && isAdded()) { // 检查 Fragment 是否已经与 Activity 关联
+            isLoading = true;
 
-            @Override
-            public void onFailure(int errorCode, String errorMsg) {
-                Log.e("HomeFragment", "Network request failed: " + errorMsg);
-                isLoading = false;
-            }
-        });
+            HttpManager.getInstance().searchHomePage(currentPage+1, PAGE_SIZE, new NetCallBack<BaseGameBean<Page<HomePageInfo>>>() {
+                @Override
+                public void onSuccess(BaseGameBean<Page<HomePageInfo>> data) {
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @SuppressLint("NotifyDataSetChanged")
+                        @Override
+                        public void run() {
+                            isLoading = false;
+                            if (isAdded()) { // 再次检查 Fragment 是否已经与 Activity 关联
+                                if (data.data != null && !data.data.records.isEmpty()) {
+                                    currentPage++;
+                                    List<HomePageInfo> newHomePageInfoList = data.data.records;
+
+                                    // 添加新数据到适配器
+                                    adapter.addHomePageInfoList(newHomePageInfoList);
+
+                                    // 去重处理
+//                                    removeDuplicate();
+
+                                    // 刷新列表
+                                    adapter.notifyDataSetChanged();
+                                } else {
+//                                    Toast.makeText(requireActivity(), "已加载完所有搜索结果", Toast.LENGTH_SHORT).show();
+                                    Log.i("HomeFragment","data.data.records已经为空");
+                                }
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(int code, String errMsg) {
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            isLoading = false;
+                            if (isAdded()) { // 再次检查 Fragment 是否已经与 Activity 关联
+                                Toast.makeText(requireActivity(), "网络请求失败: " + errMsg, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            });
+        }
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -177,5 +224,28 @@ public class HomeFragment extends Fragment {
         editText.setOnEditorActionListener(null);
 
     }
+
+
+//    private void removeDuplicate() {
+//        List<HomePageInfo> homePageInfoList = adapter.getCurrentHomePageList();
+//
+//        Set<String> uniqueKeys = new HashSet<>();
+//        List<HomePageInfo> resultList = new ArrayList<>();
+//
+//        for (HomePageInfo info : homePageInfoList) {
+//            // 拼接主页信息对象的关键字段，以便进行去重判断
+//            String key = info.moduleCode + info.moduleName + info.style; // 根据实际情况拼接关键字段
+//            if(info.style==3){
+//                Log.i("HomeFragment","style=3时的大小"+info.gameInfoList.size());
+//            }
+//            if(uniqueKeys.add(key)){
+//                // 如果当前信息对象的关键字段组合未曾出现过，则添加到结果列表中
+//                resultList.add(info);
+//            }
+//
+//        }
+//        adapter.setHomePageInfoList(resultList);
+//    }
+
 
 }
