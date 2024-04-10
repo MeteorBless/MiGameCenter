@@ -86,8 +86,8 @@ public class ResultIsNotNullFragment extends Fragment implements GameAdapter.OnI
 
     private void loadMoreData() {
         isLoading = true;
-        HttpManager manager = new HttpManager();
-        manager.searchGame(searchKeywords, currentPage + 1, 10, new NetCallBack<BaseGameBean<GameInfoPage>>() {
+//        HttpManager manager = new HttpManager();
+        HttpManager.getInstance().searchGame(searchKeywords, currentPage + 1, 10, new NetCallBack<BaseGameBean<GameInfoPage>>() {
             @Override
             public void onSuccess(BaseGameBean<GameInfoPage> data) {
                 requireActivity().runOnUiThread(new Runnable() {

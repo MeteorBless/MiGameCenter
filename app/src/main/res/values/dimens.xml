@@ -8,5 +8,6 @@
     <dimen name="corner_radius">8dp</dimen>
     <dimen name="margin_start">10dp</dimen>
     <dimen name="margin_end">10dp</dimen>
+    <dimen name="max_width">300dp</dimen>
 
 </resources>

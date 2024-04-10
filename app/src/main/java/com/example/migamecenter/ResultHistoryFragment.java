@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,13 +23,13 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
 public class ResultHistoryFragment extends Fragment {
 
     private LinearLayout historyLayout;
-    private Button deleteButton;
 
     private List<String> searchHistoryList;
 
@@ -36,7 +37,7 @@ public class ResultHistoryFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_result_history, container, false);
 
         historyLayout = rootView.findViewById(R.id.history_layout);
-        deleteButton = rootView.findViewById(R.id.btn_delete_history);
+        Button deleteButton = rootView.findViewById(R.id.btn_delete_history);
 
         // 加载搜索历史记录
         loadSearchHistory();
@@ -58,6 +59,7 @@ public class ResultHistoryFragment extends Fragment {
             }
         });
 
+
         return rootView;
     }
 
@@ -76,21 +78,9 @@ public class ResultHistoryFragment extends Fragment {
     private void showSearchHistory() {
         historyLayout.removeAllViews(); // 清空历史记录布局
 
-        // 循环遍历搜索历史记录，并添加到布局中
-//        for (String history : searchHistoryList) {
-//            TextView historyTextView = new TextView(requireContext());
-//
-//            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-//                    ViewGroup.LayoutParams.WRAP_CONTENT,
-//                    ViewGroup.LayoutParams.WRAP_CONTENT
-//            );
-//            layoutParams.setMargins(0, 0, 0, 16); // 设置每个历史记录之间的间距
-//            historyTextView.setLayoutParams(layoutParams);
-//            historyTextView.setText(trimStringIfNeeded(history)); // 如果字符串长度超过 15，截取并加上 "..."
-//            historyLayout.addView(historyTextView);
-//        }
-        // 循环遍历搜索历史记录，并添加到布局中
-        for (String history : searchHistoryList){
+        // 反向遍历搜索历史记录，并添加到布局中
+        for (int i = searchHistoryList.size() - 1; i >= 0; i--) {
+            String history = searchHistoryList.get(i);
             TextView historyTextView = new TextView(requireContext());
 
             // 创建一个圆角矩形
@@ -108,11 +98,16 @@ public class ResultHistoryFragment extends Fragment {
             layoutParams.setMargins(10, 5, 10, 5); // 设置每个历史记录之间的间距
             historyTextView.setLayoutParams(layoutParams);
             historyTextView.setText(trimStringIfNeeded(history)); // 如果字符串长度超过 15，截取并加上 "..."
+
+            // 测量historyTextView的宽度
+            historyTextView.measure(0, 0);
+            int textViewWidth = historyTextView.getMeasuredWidth();
+
             historyLayout.addView(historyTextView);
-
-
         }
     }
+
+
 
     // 清空搜索历史记录
     private void clearSearchHistory() {

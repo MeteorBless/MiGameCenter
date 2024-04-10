@@ -1,6 +1,10 @@
 package com.example.migamecenter;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Spannable;
@@ -11,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +28,8 @@ public class SplashActivity extends AppCompatActivity {
 
     private View overlay;
 
+    private ImageView iv_app_logo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,8 @@ public class SplashActivity extends AppCompatActivity {
         privacyLayout = findViewById(R.id.privacy_layout);
 
         overlay = findViewById(R.id.overlay);
+
+        iv_app_logo = findViewById(R.id.app_logo);
 
 
 
@@ -53,6 +62,12 @@ public class SplashActivity extends AppCompatActivity {
         privacyLayout.setVisibility(View.VISIBLE);
         Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         privacyLayout.startAnimation(slideUp);
+
+        Drawable img = iv_app_logo.getDrawable();
+
+        img.setColorFilter(Color.parseColor("#80000000"), PorterDuff.Mode.SRC_IN);
+
+        iv_app_logo.setImageDrawable(img);
 
         TextView tvContent = findViewById(R.id.tv_content);
         String text = getResources().getString(R.string.string_tv_terms_and_conditions);

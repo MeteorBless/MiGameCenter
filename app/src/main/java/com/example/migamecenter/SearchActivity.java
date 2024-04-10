@@ -108,8 +108,8 @@ public class SearchActivity extends FragmentActivity {
     }
 
     private void fetchData() {
-        HttpManager manager = new HttpManager();
-        manager.searchGame(searchKeywords, 1, 10, new NetCallBack<BaseGameBean<GameInfoPage>>() {
+//        HttpManager manager = new HttpManager();
+        HttpManager.getInstance().searchGame(searchKeywords, 1, 10, new NetCallBack<BaseGameBean<GameInfoPage>>() {
             @Override
             public void onSuccess(BaseGameBean<GameInfoPage> data) {
                 runOnUiThread(new Runnable() {

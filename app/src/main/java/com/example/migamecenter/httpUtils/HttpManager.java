@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 
 import com.example.migamecenter.bean.BaseGameBean;
 import com.example.migamecenter.bean.GameInfoPage;
+import com.example.migamecenter.bean.HomePageInfo;
+import com.example.migamecenter.bean.Page;
+import com.example.migamecenter.bean.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -134,5 +137,75 @@ public class HttpManager {
             }
         });
     }
+
+    public void searchHomePage(int current, int size, NetCallBack<BaseGameBean<Page<HomePageInfo>>> netCallBack) {
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://hotfix-service-prod.g.mi.com/quick-game/game/homePage")).newBuilder();
+        urlBuilder.addQueryParameter("current", String.valueOf(current));
+        urlBuilder.addQueryParameter("size", String.valueOf(size));
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .get()
+                .url(url)
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    // 解析响应体
+                    String responseBody = response.body().string();
+                    // 使用 Gson 解析 JSON 响应
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<BaseGameBean<Page<HomePageInfo>>>(){}.getType();
+                    BaseGameBean<Page<HomePageInfo>> data = gson.fromJson(responseBody, type);
+
+                    netCallBack.onSuccess(data);
+                } else {
+                    netCallBack.onFailure(response.code(), "网络请求失败");
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                netCallBack.onFailure(-1, Log.getStackTraceString(e));
+            }
+        });
+    }
+
+    public static void getUserInfo(final NetCallBack<BaseGameBean<UserInfo>> netCallBack) {
+        Request request = new Request.Builder()
+                .url("https://hotfix-service-prod.g.mi.com/quick-game/api/user/info")
+                .get()
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                try {
+                    if (response.isSuccessful()) {
+                        // 解析响应体
+                        String responseBody = response.body().string();
+                        // 使用 Gson 解析 JSON 响应
+                        Gson gson = new Gson();
+                        Type type = new TypeToken<BaseGameBean<UserInfo>>(){}.getType();
+                        BaseGameBean<UserInfo> data = gson.fromJson(responseBody, type);
+
+                        netCallBack.onSuccess(data);
+                    } else {
+                        netCallBack.onFailure(response.code(), "网络请求失败");
+                    }
+                } catch (IOException e) {
+                    netCallBack.onFailure(-1, Log.getStackTraceString(e));
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                netCallBack.onFailure(-1, Log.getStackTraceString(e));
+            }
+        });
+    }
+
 
 }

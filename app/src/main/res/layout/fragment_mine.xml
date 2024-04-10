@@ -49,6 +49,13 @@
         android:textAppearance="@style/style_app_name"
         />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出登录"
+        android:id="@+id/btn_log_out"
+        android:layout_below="@+id/top_background"/>
+
 
 
 

@@ -16,6 +16,7 @@
             android:text="最近搜索"
             android:textSize="15.33sp"
             android:textStyle="bold"
+            android:layout_marginStart="16.7dp"
             android:layout_gravity="center_vertical"
             android:padding="8dp" />
 
@@ -25,6 +26,7 @@
             android:layout_height="15dp"
             android:background="@drawable/icon_delete"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16.7dp"
             android:padding="8dp" />
     </LinearLayout>
 
@@ -32,7 +34,9 @@
         android:id="@+id/history_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginStart="16.7dp"
+        android:layout_marginEnd="16.7dp">
 
     </LinearLayout>
 </LinearLayout>

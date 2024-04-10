@@ -63,6 +63,7 @@ public class RetrofitManager {
 
 
 
+
     private <T> void enqueue_game(Call<BaseGameBean<T>> gameByModule, NetCallBack<BaseGameBean<T>> netCallBack) {
         gameByModule.enqueue(new Callback<BaseGameBean<T>>() {
             @Override

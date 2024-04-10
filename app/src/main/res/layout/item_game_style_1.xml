@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="17dp"
+    android:layout_marginBottom="17dp"
+    android:gravity="center_horizontal"
+    >
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="7dp"
+    android:drawableStart="@drawable/icon_like"
+
+    android:text="3n icon 模块"
+
+    android:textStyle="bold"
+
+    android:paddingStart="5dp"
+
+    android:drawablePadding="8dp"
+    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/game_icon_image_view_0"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rounded_corner"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/game_name_text_view_0"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="Game Name" />
+
+            <TextView
+                android:id="@+id/play_num_text_view_0"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textColor="#99000000"
+                android:gravity="center"
+                android:textSize="9.33sp"
+                android:text="在线人数"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/game_icon_image_view_1"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rounded_corner"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/game_name_text_view_1"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="Game Name" />
+
+            <TextView
+                android:id="@+id/play_num_text_view_1"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textColor="#99000000"
+                android:gravity="center"
+                android:textSize="9.33sp"
+                android:text="在线人数"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/game_icon_image_view_2"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rounded_corner" />
+
+            <TextView
+                android:id="@+id/game_name_text_view_2"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="Game Name" />
+
+            <TextView
+                android:id="@+id/play_num_text_view_2"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textColor="#99000000"
+                android:gravity="center"
+                android:textSize="9.33sp"
+                android:text="在线人数"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/game_icon_image_view_3"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rounded_corner"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/game_name_text_view_3"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="Game Name" />
+
+            <TextView
+                android:id="@+id/play_num_text_view_3"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textColor="#99000000"
+                android:gravity="center"
+                android:textSize="9.33sp"
+                android:text="在线人数"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/game_icon_image_view_4"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rounded_corner"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/game_name_text_view_4"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="Game Name" />
+
+            <TextView
+                android:id="@+id/play_num_text_view_4"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textColor="#99000000"
+                android:gravity="center"
+                android:textSize="9.33sp"
+                android:text="在线人数"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/game_icon_image_view_5"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rounded_corner" />
+
+            <TextView
+                android:id="@+id/game_name_text_view_5"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="Game Name" />
+
+            <TextView
+                android:id="@+id/play_num_text_view_5"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:textColor="#99000000"
+                android:gravity="center"
+                android:textSize="9.33sp"
+                android:text="在线人数"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

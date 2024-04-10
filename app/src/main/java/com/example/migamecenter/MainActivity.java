@@ -1,18 +1,24 @@
 package com.example.migamecenter;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends FragmentActivity {
+import java.util.HashMap;
 
+public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private HashMap<Integer, Fragment> fragmentCache = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +29,13 @@ public class MainActivity extends FragmentActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
         // 初始时显示默认 fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new HomeFragment()).commit();
+        showFragment(HomeFragment.class);
     }
-
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
 
                     if (item.getItemId() == R.id.nav_home) {
                         selectedFragment = new HomeFragment();
@@ -40,20 +43,55 @@ public class MainActivity extends FragmentActivity {
                         selectedFragment = new MyHomePageFragment();
                     }
 
-
                     // 切换到选择的 fragment
-                    if (selectedFragment!=null){
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                selectedFragment).addToBackStack(null).commit();
+                    if (selectedFragment != null) {
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                                .replace(R.id.fragment_container, selectedFragment)
+                                .addToBackStack(selectedFragment.getClass().getSimpleName())
+                                .commit();
                         return true;
-                    }else{
+                    } else {
                         return false;
                     }
-
-
                 }
             };
 
-    // 省略其他的方法和逻辑
+    private <T extends Fragment> T getOrCreateFragment(Class<T> fragmentClass) {
+        T fragment = (T) fragmentCache.get(fragmentClass.hashCode());
+
+        if (fragment == null) {
+            try {
+                fragment = fragmentClass.newInstance();
+                fragmentCache.put(fragmentClass.hashCode(), fragment);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to instantiate " + fragmentClass.getSimpleName(), e);
+            }
+        }
+
+        return fragment;
+    }
+
+    private void showFragment(Class<? extends Fragment> fragmentClass) {
+        try {
+            Fragment fragment = fragmentClass.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+        } catch (Exception e) {
+            Log.e("MainActivity", "Failed to instantiate fragment", e);
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        for (Fragment fragment : fragmentCache.values()) {
+            if (fragment != null) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commitAllowingStateLoss();
+            }
+        }
+        fragmentCache.clear();
+    }
 
 }
