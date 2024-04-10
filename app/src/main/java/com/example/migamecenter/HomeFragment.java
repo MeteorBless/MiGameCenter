@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,9 +38,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HomeFragment extends Fragment {
-    private EditText editText;
-
+public class HomeFragment extends Fragment{
+//    private EditText editText;
+    private TextView textView;
     private RecyclerView recyclerView;
 
     private HomePageAdapter adapter;
@@ -59,7 +60,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // 找到控件
-        editText = view.findViewById(R.id.edittext1);
+        textView = view.findViewById(R.id.textView_search);
+//        editText = view.findViewById(R.id.edittext1);
         recyclerView = view.findViewById(R.id.recycler_view);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
@@ -67,10 +69,10 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(adapter);
 
-        editText = view.findViewById(R.id.edittext1);
-        editText.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.drawable_padding));
-        editText.setInputType(InputType.TYPE_CLASS_TEXT);
-        editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+//        editText = view.findViewById(R.id.edittext1);
+//        editText.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.drawable_padding));
+//        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+//        editText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 
 
         bindListener();
@@ -81,6 +83,14 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void bindListener(){
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), SearchActivity.class);
+                requireContext().startActivity(intent);
+            }
+        });
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -103,36 +113,41 @@ public class HomeFragment extends Fragment {
                 int totalItemCount = layoutManager.getItemCount();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 Log.i("layoutManager.itemCount","条目总数量为："+totalItemCount);
-                if (!isLoading && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
-                    loadMoreData();
-                }
+                requireActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isLoading && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+                            loadMoreData();
+                        }
+                    }
+                });
             }
         });
 
-        // 设置触摸事件监听器
-        editText.setOnTouchListener((v, event) -> {
-            // 检查触摸事件是否在右侧图标上
-            if (event.getAction() == MotionEvent.ACTION_UP &&
-                    event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2].getBounds().width())) {
-                // 在这里执行页面跳转的逻辑
-                startActivity(new Intent(requireContext(), SearchActivity.class));
-                return true;
-            }
-            return false;
-        });
-
-        editText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                String keywords = editText.getText().toString().trim();
-                Intent intent = new Intent(requireContext(), SearchActivity.class);
-//                String hint_ = editText.getHint().toString().trim();
-//                intent.putExtra("keywords", keywords);
-//                intent.putExtra("hint",hint_);
-                requireContext().startActivity(intent);
-                return true;
-            }
-            return false;
-        });
+//        // 设置触摸事件监听器
+//        editText.setOnTouchListener((v, event) -> {
+//            // 检查触摸事件是否在右侧图标上
+//            if (event.getAction() == MotionEvent.ACTION_UP &&
+//                    event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2].getBounds().width())) {
+//                // 在这里执行页面跳转的逻辑
+//                startActivity(new Intent(requireContext(), SearchActivity.class));
+//                return true;
+//            }
+//            return false;
+//        });
+//
+//        editText.setOnEditorActionListener((v, actionId, event) -> {
+//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+////                String keywords = editText.getText().toString().trim();
+//                Intent intent = new Intent(requireContext(), SearchActivity.class);
+////                String hint_ = editText.getHint().toString().trim();
+////                intent.putExtra("keywords", keywords);
+////                intent.putExtra("hint",hint_);
+//                requireContext().startActivity(intent);
+//                return true;
+//            }
+//            return false;
+//        });
     }
 
     private void fetchData() {
@@ -234,10 +249,10 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // 取消触摸事件监听器
-        editText.setOnTouchListener(null);
-        // 取消编辑动作监听器
-        editText.setOnEditorActionListener(null);
+//        // 取消触摸事件监听器
+//        editText.setOnTouchListener(null);
+//        // 取消编辑动作监听器
+//        editText.setOnEditorActionListener(null);
 
     }
 

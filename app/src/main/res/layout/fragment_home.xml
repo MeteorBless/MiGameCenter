@@ -4,12 +4,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/edittext1"
+    <TextView
+        android:id="@+id/textView_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner"
-        android:drawableEnd="@drawable/icon_search"
         android:hint="@string/string_search_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,15 +23,15 @@
         android:paddingEnd="10dp"
         android:paddingBottom="3.33dp"
         android:maxLines="1"
-        android:imeOptions="actionSearch"
-        />
+        app:drawableEndCompat="@drawable/icon_search" />
+
     <View
         android:layout_marginTop="3.33dp"
         android:layout_width="match_parent"
         android:id="@+id/bg_line"
         android:layout_height="1dp"
         android:background="@color/bg_line"
-        app:layout_constraintTop_toBottomOf="@+id/edittext1"
+        app:layout_constraintTop_toBottomOf="@+id/textView_search"
         android:alpha="0.1"
         app:layout_constraintEnd_toEndOf="parent" />
 

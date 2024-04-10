@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,14 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+
 
 
 public class ResultHistoryFragment extends Fragment {
@@ -63,16 +58,25 @@ public class ResultHistoryFragment extends Fragment {
         return rootView;
     }
 
-    // 加载搜索历史记录
+    //    private void loadSearchHistory() {
+    //        Set<String> historySet = ((SearchActivity) requireActivity()).getSearchHistory();
+    //        searchHistoryList = new ArrayList<>(historySet);
+    //        // 如果搜索历史记录超过 30 条，则只保留最新的 30 条记录
+    //        if (searchHistoryList.size() > 30) {
+    //            searchHistoryList = searchHistoryList.subList(0, 30);
+    //        }
+    //    }
 
+    // 加载搜索历史记录
     private void loadSearchHistory() {
-        Set<String> historySet = ((SearchActivity) requireActivity()).getSearchHistory();
-        searchHistoryList = new ArrayList<>(historySet);
+        List<String> historyList = ((SearchActivity) requireActivity()).getSearchHistory();
+        searchHistoryList = new ArrayList<>(historyList);
         // 如果搜索历史记录超过 30 条，则只保留最新的 30 条记录
         if (searchHistoryList.size() > 30) {
             searchHistoryList = searchHistoryList.subList(0, 30);
         }
     }
+
 
     // 显示搜索历史记录
     private void showSearchHistory() {
@@ -86,7 +90,10 @@ public class ResultHistoryFragment extends Fragment {
             // 创建一个圆角矩形
             GradientDrawable backgroundDrawable = new GradientDrawable();
             backgroundDrawable.setCornerRadius(getResources().getDimension(R.dimen.corner_radius));
-            backgroundDrawable.setColor(Color.parseColor("#f7f7f7"));
+            backgroundDrawable.setColor(Color.parseColor("#f3f3f3"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                backgroundDrawable.setPadding(5,2,5,2);
+            }
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -101,7 +108,6 @@ public class ResultHistoryFragment extends Fragment {
 
             // 测量historyTextView的宽度
             historyTextView.measure(0, 0);
-            int textViewWidth = historyTextView.getMeasuredWidth();
 
             historyLayout.addView(historyTextView);
         }
@@ -109,16 +115,22 @@ public class ResultHistoryFragment extends Fragment {
 
 
 
+
     // 清空搜索历史记录
     private void clearSearchHistory() {
         SharedPreferences preferences = requireContext().getSharedPreferences("SearchHistory", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
+        editor.clear(); // 清空 SharedPreferences 中的数据
         editor.apply();
+
+        // 更新当前搜索历史列表为空
+        searchHistoryList.clear();
+
         Toast.makeText(requireContext(), "搜索历史记录已清空", Toast.LENGTH_SHORT).show();
         historyLayout.removeAllViews(); // 清空历史记录布局
         requireView().setVisibility(View.GONE); // 隐藏整个 fragment
     }
+
 
     // 如果字符串长度超过 15，截取并加上 "..."
     private String trimStringIfNeeded(String input) {

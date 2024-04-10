@@ -33,8 +33,8 @@
     <LinearLayout
         android:id="@+id/history_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="500dp"
+        android:orientation="vertical"
         android:layout_marginStart="16.7dp"
         android:layout_marginEnd="16.7dp">
 

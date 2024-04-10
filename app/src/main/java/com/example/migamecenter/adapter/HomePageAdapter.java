@@ -1,12 +1,12 @@
 package com.example.migamecenter.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.migamecenter.DetailActivity;
 import com.example.migamecenter.R;
 import com.example.migamecenter.bean.GameInfo;
 import com.example.migamecenter.bean.HomePageInfo;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<HomePageInfo> homePageInfoList = new ArrayList<>();
+    private static List<HomePageInfo> homePageInfoList = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
     public void setHomePageInfoList(List<HomePageInfo> homePageInfoList) {
@@ -66,6 +67,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int viewType = getItemViewType(position);
         if (viewType == 1) {
             ((StyleOneViewHolder) holder).bindStyleOne(homePageInfo);
+
         } else if (viewType == 2) {
             ((StyleTwoViewHolder) holder).bindStyleTwo(homePageInfo);
         } else {
@@ -83,36 +85,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // 根据样式字段决定布局类型
         return homePageInfoList.get(position).style;
     }
-
-//    public static class StyleOneViewHolder extends RecyclerView.ViewHolder {
-//        private final ImageView gameIconImageView;
-//        private final TextView gameNameTextView;
-//
-//        private final TextView gamePlayNumTextView;
-//
-//        public StyleOneViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            gameIconImageView = itemView.findViewById(R.id.game_icon_image_view);
-//            gameNameTextView = itemView.findViewById(R.id.game_name_text_view);
-//            gamePlayNumTextView = itemView.findViewById(R.id.play_num_text_view);
-//        }
-//
-//
-//        public void bindStyleOne(HomePageInfo homePageInfo) {
-//            if (homePageInfo.gameInfoList != null && !homePageInfo.gameInfoList.isEmpty()) {
-//                Glide.with(itemView.getContext()).load(homePageInfo.gameInfoList.get(0).icon)
-//                        .transform(new RoundedCorners(50))
-//                        .into(gameIconImageView);
-//                gameNameTextView.setText(homePageInfo.gameInfoList.get(0).gameName);
-//
-//                gamePlayNumTextView.setText(homePageInfo.gameInfoList.get(0).playNumFormat);
-//            } else {
-//                Log.i("HomePageAdapter","gameInfoList为空");
-//            }
-//        }
-//
-//
-//    }
 
     public static class StyleOneViewHolder extends RecyclerView.ViewHolder {
         private final List<ImageView> gameIconImageViewList;
@@ -136,6 +108,20 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         itemView.getResources().getIdentifier("play_num_text_view_" + i,
                                 "id", itemView.getContext().getPackageName()));
 
+                final int finalI = i;
+                gameIconImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 处理游戏图标点击事件的逻辑
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
+                            Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                            intent.putExtra("gameInfo", gameInfo);
+                            v.getContext().startActivity(intent);
+                        }
+                    }
+                });
                 gameIconImageViewList.add(gameIconImageView);
                 gameNameTextViewList.add(gameNameTextView);
                 gamePlayNumTextViewList.add(gamePlayNumTextView);
@@ -164,9 +150,8 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Log.i("HomePageAdapter", "gameInfoList为空");
             }
         }
+
     }
-
-
 
     public static class StyleTwoViewHolder extends RecyclerView.ViewHolder {
         private final List<ImageView> gameIconImageViewList;
@@ -190,6 +175,21 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         itemView.getResources().getIdentifier("play_num_text_view_" + i,
                                 "id", itemView.getContext().getPackageName()));
 
+                final int finalI = i;
+                gameIconImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 处理游戏图标点击事件的逻辑
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
+                            Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                            intent.putExtra("gameInfo", gameInfo);
+                            v.getContext().startActivity(intent);
+                        }
+                    }
+                });
+
                 gameIconImageViewList.add(gameIconImageView);
                 gameNameTextViewList.add(gameNameTextView);
                 gamePlayNumTextViewList.add(gamePlayNumTextView);
@@ -202,6 +202,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 int size = 8;
                 for (int i = 0; i < size; i++) {
                     GameInfo gameInfo = homePageInfo.gameInfoList.get(i);
+
                     Glide.with(itemView.getContext()).load(gameInfo.icon)
                             .transform(new RoundedCorners(50))
                             .into(gameIconImageViewList.get(i));
@@ -248,6 +249,21 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 TextView tagsTextView = itemView.findViewById(
                         itemView.getResources().getIdentifier("tags_text_view_" + i,
                                 "id", itemView.getContext().getPackageName()));
+
+                final int finalI = i;
+                gameIconImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // 处理游戏图标点击事件的逻辑
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
+                            Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                            intent.putExtra("gameInfo", gameInfo);
+                            v.getContext().startActivity(intent);
+                        }
+                    }
+                });
 
                 gameIconImageViewList.add(gameIconImageView);
                 gameNameTextViewList.add(gameNameTextView);

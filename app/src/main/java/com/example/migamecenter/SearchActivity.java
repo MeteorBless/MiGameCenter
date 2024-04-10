@@ -25,7 +25,10 @@ import com.example.migamecenter.bean.GameInfo;
 import com.example.migamecenter.bean.GameInfoPage;
 import com.example.migamecenter.httpUtils.HttpManager;
 import com.example.migamecenter.httpUtils.NetCallBack;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -176,24 +179,51 @@ public class SearchActivity extends FragmentActivity {
         fragmentTransaction.commit();
     }
 
+//    private void addToSearchHistory(String keywords) {
+//        Set<String> historySet = getSearchHistory();
+//        historySet.add(keywords);
+//        saveSearchHistory(historySet);
+//    }
+//
+//    // 从 SharedPreferences 中获取搜索历史记录
+//    public Set<String> getSearchHistory() {
+//        SharedPreferences preferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE);
+//        return preferences.getStringSet("history", new HashSet<>());
+//    }
+//
+//    // 将搜索历史记录保存到 SharedPreferences 中
+//    private void saveSearchHistory(Set<String> historySet) {
+//        SharedPreferences preferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = preferences.edit();
+//        editor.putStringSet("history", historySet);
+//        editor.apply();
+//    }
     private void addToSearchHistory(String keywords) {
-        Set<String> historySet = getSearchHistory();
-        historySet.add(keywords);
-        saveSearchHistory(historySet);
+        List<String> historyList = getSearchHistory();
+        historyList.add(keywords);
+        saveSearchHistory(historyList);
     }
 
     // 从 SharedPreferences 中获取搜索历史记录
-    public Set<String> getSearchHistory() {
+    public List<String> getSearchHistory() {
         SharedPreferences preferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE);
-        return preferences.getStringSet("history", new HashSet<>());
+        // 从 SharedPreferences 中获取搜索历史记录列表，如果不存在则返回一个空列表
+        String json = preferences.getString("history", "");
+        if (!json.isEmpty()) {
+            return new Gson().fromJson(json, new TypeToken<List<String>>(){}.getType());
+        }
+        return new ArrayList<>();
     }
 
     // 将搜索历史记录保存到 SharedPreferences 中
-    private void saveSearchHistory(Set<String> historySet) {
+    private void saveSearchHistory(List<String> historyList) {
         SharedPreferences preferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putStringSet("history", historySet);
+        // 将搜索历史记录列表转换为 JSON 格式，并保存到 SharedPreferences 中
+        String json = new Gson().toJson(historyList);
+        editor.putString("history", json);
         editor.apply();
     }
+
 }
 
