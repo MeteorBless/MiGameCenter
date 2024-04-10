@@ -86,7 +86,9 @@ public class SearchActivity extends FragmentActivity {
         etGameKeywords.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 searchKeywords = etGameKeywords.getText().toString().trim();
-                addToSearchHistory(searchKeywords);
+                if (searchKeywords.length()!=0){
+                    addToSearchHistory(searchKeywords);
+                }
                 fetchData();
                 return true;
             }
@@ -96,7 +98,10 @@ public class SearchActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 searchKeywords = etGameKeywords.getText().toString();
-                addToSearchHistory(searchKeywords);
+                if(searchKeywords.length()!=0){
+                    addToSearchHistory(searchKeywords);
+                }
+
                 fetchData();
 
             }
@@ -225,5 +230,10 @@ public class SearchActivity extends FragmentActivity {
         editor.apply();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        swipeRefreshLayout = null;
+    }
 }
 

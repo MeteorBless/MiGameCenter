@@ -167,7 +167,9 @@ public class HomeFragment extends Fragment{
                         } else {
                             Toast.makeText(requireActivity(), "数据为空", Toast.LENGTH_SHORT).show();
                         }
-                        swipeRefreshLayout.setRefreshing(false);
+                        if(swipeRefreshLayout!=null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 });
             }
@@ -253,6 +255,10 @@ public class HomeFragment extends Fragment{
 //        editText.setOnTouchListener(null);
 //        // 取消编辑动作监听器
 //        editText.setOnEditorActionListener(null);
+        recyclerView.clearOnScrollListeners();
+        recyclerView = null;
+        swipeRefreshLayout = null;
+        textView = null;
 
     }
 

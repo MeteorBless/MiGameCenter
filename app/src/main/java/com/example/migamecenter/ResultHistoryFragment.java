@@ -58,14 +58,6 @@ public class ResultHistoryFragment extends Fragment {
         return rootView;
     }
 
-    //    private void loadSearchHistory() {
-    //        Set<String> historySet = ((SearchActivity) requireActivity()).getSearchHistory();
-    //        searchHistoryList = new ArrayList<>(historySet);
-    //        // 如果搜索历史记录超过 30 条，则只保留最新的 30 条记录
-    //        if (searchHistoryList.size() > 30) {
-    //            searchHistoryList = searchHistoryList.subList(0, 30);
-    //        }
-    //    }
 
     // 加载搜索历史记录
     private void loadSearchHistory() {
@@ -84,32 +76,34 @@ public class ResultHistoryFragment extends Fragment {
 
         // 反向遍历搜索历史记录，并添加到布局中
         for (int i = searchHistoryList.size() - 1; i >= 0; i--) {
-            String history = searchHistoryList.get(i);
-            TextView historyTextView = new TextView(requireContext());
+            if(searchHistoryList.get(i).length()!=0){
+                String history = searchHistoryList.get(i);
+                TextView historyTextView = new TextView(requireContext());
 
-            // 创建一个圆角矩形
-            GradientDrawable backgroundDrawable = new GradientDrawable();
-            backgroundDrawable.setCornerRadius(getResources().getDimension(R.dimen.corner_radius));
-            backgroundDrawable.setColor(Color.parseColor("#f3f3f3"));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                backgroundDrawable.setPadding(5,2,5,2);
+                // 创建一个圆角矩形
+                GradientDrawable backgroundDrawable = new GradientDrawable();
+                backgroundDrawable.setCornerRadius(getResources().getDimension(R.dimen.corner_radius));
+                backgroundDrawable.setColor(Color.parseColor("#f3f3f3"));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    backgroundDrawable.setPadding(5,2,5,2);
+                }
+
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                // 设置背景
+                historyTextView.setBackground(backgroundDrawable);
+
+                layoutParams.setMargins(10, 5, 10, 5); // 设置每个历史记录之间的间距
+                historyTextView.setLayoutParams(layoutParams);
+                historyTextView.setText(trimStringIfNeeded(history)); // 如果字符串长度超过 15，截取并加上 "..."
+
+                // 测量historyTextView的宽度
+                historyTextView.measure(0, 0);
+
+                historyLayout.addView(historyTextView);
             }
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-
-            // 设置背景
-            historyTextView.setBackground(backgroundDrawable);
-
-            layoutParams.setMargins(10, 5, 10, 5); // 设置每个历史记录之间的间距
-            historyTextView.setLayoutParams(layoutParams);
-            historyTextView.setText(trimStringIfNeeded(history)); // 如果字符串长度超过 15，截取并加上 "..."
-
-            // 测量historyTextView的宽度
-            historyTextView.measure(0, 0);
-
-            historyLayout.addView(historyTextView);
         }
     }
 

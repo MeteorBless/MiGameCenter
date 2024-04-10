@@ -19,12 +19,13 @@ import com.example.migamecenter.R;
 import com.example.migamecenter.bean.GameInfo;
 import com.example.migamecenter.bean.HomePageInfo;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static List<HomePageInfo> homePageInfoList = new ArrayList<>();
+    private List<HomePageInfo> homePageInfoList = new ArrayList<>();
 
     @SuppressLint("NotifyDataSetChanged")
     public void setHomePageInfoList(List<HomePageInfo> homePageInfoList) {
@@ -49,15 +50,15 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (viewType == 1) {
             // 样式 1：1*3
             itemView = inflater.inflate(R.layout.item_game_style_1, parent, false);
-            return new StyleOneViewHolder(itemView);
+            return new StyleOneViewHolder(itemView,homePageInfoList);
         } else if (viewType == 2) {
             // 样式 2：1*4
             itemView = inflater.inflate(R.layout.item_game_style_2, parent, false);
-            return new StyleTwoViewHolder(itemView);
+            return new StyleTwoViewHolder(itemView,homePageInfoList);
         } else {
             // 样式 3：单行
             itemView = inflater.inflate(R.layout.item_game_style_3, parent, false);
-            return new StyleThreeViewHolder(itemView);
+            return new StyleThreeViewHolder(itemView,homePageInfoList);
         }
     }
 
@@ -90,12 +91,16 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private final List<ImageView> gameIconImageViewList;
         private final List<TextView> gameNameTextViewList;
         private final List<TextView> gamePlayNumTextViewList;
+        private WeakReference<List<HomePageInfo>> homePageInfoListRef;
 
-        public StyleOneViewHolder(@NonNull View itemView) {
+        public StyleOneViewHolder(@NonNull View itemView,List<HomePageInfo> homePageInfoList) {
+
             super(itemView);
+
             gameIconImageViewList = new ArrayList<>();
             gameNameTextViewList = new ArrayList<>();
             gamePlayNumTextViewList = new ArrayList<>();
+            homePageInfoListRef = new WeakReference<>(homePageInfoList);
 
             for (int i = 0; i < 6; i++) {
                 ImageView gameIconImageView = itemView.findViewById(
@@ -113,12 +118,15 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     @Override
                     public void onClick(View v) {
                         // 处理游戏图标点击事件的逻辑
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
-                            Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                            intent.putExtra("gameInfo", gameInfo);
-                            v.getContext().startActivity(intent);
+                        List<HomePageInfo> homePageInfoList = homePageInfoListRef.get();
+                        if(homePageInfoList!=null){
+                            int position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION) {
+                                GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
+                                Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                                intent.putExtra("gameInfo", gameInfo);
+                                v.getContext().startActivity(intent);
+                            }
                         }
                     }
                 });
@@ -158,11 +166,14 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private final List<TextView> gameNameTextViewList;
         private final List<TextView> gamePlayNumTextViewList;
 
-        public StyleTwoViewHolder(@NonNull View itemView) {
+        private WeakReference<List<HomePageInfo>> homePageInfoListRef;
+
+        public StyleTwoViewHolder(@NonNull View itemView,List<HomePageInfo> homePageInfoList) {
             super(itemView);
             gameIconImageViewList = new ArrayList<>();
             gameNameTextViewList = new ArrayList<>();
             gamePlayNumTextViewList = new ArrayList<>();
+            homePageInfoListRef = new WeakReference<>(homePageInfoList);
 
             for (int i = 0; i < 8; i++) {
                 ImageView gameIconImageView = itemView.findViewById(
@@ -180,12 +191,15 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     @Override
                     public void onClick(View v) {
                         // 处理游戏图标点击事件的逻辑
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
-                            Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                            intent.putExtra("gameInfo", gameInfo);
-                            v.getContext().startActivity(intent);
+                        List<HomePageInfo> homePageInfoList = homePageInfoListRef.get();
+                        if(homePageInfoList!=null){
+                            int position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION) {
+                                GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
+                                Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                                intent.putExtra("gameInfo", gameInfo);
+                                v.getContext().startActivity(intent);
+                            }
                         }
                     }
                 });
@@ -229,12 +243,16 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         private final List<TextView> tagsTextViewList;
 
-        public StyleThreeViewHolder(@NonNull View itemView) {
+        private WeakReference<List<HomePageInfo>> homePageInfoListRef;
+
+        public StyleThreeViewHolder(@NonNull View itemView,List<HomePageInfo> homePageInfoList) {
             super(itemView);
             gameIconImageViewList = new ArrayList<>();
             gameNameTextViewList = new ArrayList<>();
             briefTextViewList = new ArrayList<>();
             tagsTextViewList = new ArrayList<>();
+
+            homePageInfoListRef = new WeakReference<>(homePageInfoList);
 
             for (int i = 0; i < 4; i++) {
                 ImageView gameIconImageView = itemView.findViewById(
@@ -255,12 +273,15 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     @Override
                     public void onClick(View v) {
                         // 处理游戏图标点击事件的逻辑
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
-                            Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                            intent.putExtra("gameInfo", gameInfo);
-                            v.getContext().startActivity(intent);
+                        List<HomePageInfo> homePageInfoList = homePageInfoListRef.get();
+                        if(homePageInfoList!=null){
+                            int position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION) {
+                                GameInfo gameInfo = homePageInfoList.get(position).gameInfoList.get(finalI);
+                                Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                                intent.putExtra("gameInfo", gameInfo);
+                                v.getContext().startActivity(intent);
+                            }
                         }
                     }
                 });

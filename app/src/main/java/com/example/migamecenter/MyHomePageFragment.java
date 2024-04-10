@@ -90,6 +90,8 @@ public class MyHomePageFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         sharedPreferences = null; // 解除对 SharedPreferences 的引用
+        appLoginTextView = null;
+        ivPersonalAvatar = null;
     }
 
 //    private void getUserInfo(){
