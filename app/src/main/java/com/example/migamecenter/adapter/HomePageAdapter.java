@@ -151,7 +151,11 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     Glide.with(itemView.getContext()).load(gameInfo.icon)
                             .transform(new RoundedCorners(50))
                             .into(gameIconImageViewList.get(i));
-                    gameNameTextViewList.get(i).setText(gameInfo.gameName);
+                    String gameName = gameInfo.gameName;
+                    if (gameName.length() > 5) {
+                        gameName = gameName.substring(0, 4) + "...";
+                    }
+                    gameNameTextViewList.get(i).setText(gameName);
                     if(gameInfo.playNumFormat!=null){
                         gamePlayNumTextViewList.get(i).setText(gameInfo.playNumFormat+"人正在玩");
                     }
@@ -201,7 +205,11 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     Glide.with(itemView.getContext()).load(gameInfo.icon)
                             .transform(new RoundedCorners(50))
                             .into(gameIconImageViewList.get(i));
-                    gameNameTextViewList.get(i).setText(gameInfo.gameName);
+                    String gameName = gameInfo.gameName;
+                    if (gameName.length() > 5) {
+                        gameName = gameName.substring(0, 4) + "...";
+                    }
+                    gameNameTextViewList.get(i).setText(gameName);
                     if(gameInfo.playNumFormat!=null){
                         gamePlayNumTextViewList.get(i).setText(gameInfo.tags);
                     }
