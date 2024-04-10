@@ -3,6 +3,10 @@
 
 ![img_9.png](img_9.png)
 
+### 断网时，网页缓存第一页数据
+
+![img_10.png](img_10.png)
+
 ### splash页，经过一秒的动画，弹出声明与条款。点击不同意则退出app
 
 ![img_7.png](img_7.png)

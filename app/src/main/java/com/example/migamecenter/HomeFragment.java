@@ -1,7 +1,9 @@
 package com.example.migamecenter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -26,7 +28,10 @@ import com.example.migamecenter.bean.HomePageInfo;
 import com.example.migamecenter.bean.Page;
 import com.example.migamecenter.httpUtils.HttpManager;
 import com.example.migamecenter.httpUtils.NetCallBack;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -139,10 +144,13 @@ public class HomeFragment extends Fragment {
                 requireActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (data.data!=null){
+                        if (data.data != null) {
+                            // 缓存第一页数据到本地
+                            cacheFirstPageData(data.data.records);
+
                             adapter.setHomePageInfoList(data.data.records);
-                        }else{
-                            Toast.makeText(requireActivity(),"数据为空",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(requireActivity(), "数据为空", Toast.LENGTH_SHORT).show();
                         }
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -151,10 +159,18 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(int errorCode, String errorMsg) {
+                // 在网络请求失败时，尝试从本地缓存加载数据
+                List<HomePageInfo> cachedData = loadCachedData();
                 requireActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(requireActivity(),"网络请求失败"+errorMsg,Toast.LENGTH_SHORT).show();
+                        if (cachedData != null) {
+                            // 显示本地缓存数据
+                            adapter.setHomePageInfoList(cachedData);
+                        } else {
+                            // 显示网络请求失败的提示信息
+                            Toast.makeText(requireActivity(), "网络请求失败" + errorMsg, Toast.LENGTH_SHORT).show();
+                        }
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });
@@ -247,5 +263,28 @@ public class HomeFragment extends Fragment {
 //        adapter.setHomePageInfoList(resultList);
 //    }
 
+    // 缓存第一页数据到本地
+    private void cacheFirstPageData(List<HomePageInfo> data) {
+    // 使用SharedPreferences缓存数据
+    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("HomePageCache", Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    Gson gson = new Gson();
+    String jsonData = gson.toJson(data);
+    editor.putString("firstPageData", jsonData);
+    editor.apply();
+}
+
+    // 从本地加载缓存数据
+    private List<HomePageInfo> loadCachedData() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("HomePageCache", Context.MODE_PRIVATE);
+        String jsonData = sharedPreferences.getString("firstPageData", null);
+        if (jsonData != null) {
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<HomePageInfo>>() {}.getType();
+            return gson.fromJson(jsonData, listType);
+        } else {
+            return null;
+        }
+    }
 
 }
