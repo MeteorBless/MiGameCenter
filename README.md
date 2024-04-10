@@ -1,4 +1,8 @@
 
+### 主页
+
+![img_9.png](img_9.png)
+
 ### splash页，经过一秒的动画，弹出声明与条款。点击不同意则退出app
 
 ![img_7.png](img_7.png)
