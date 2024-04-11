@@ -14,4 +14,5 @@
     <string name="string_search">搜索</string>
     <string name="string_back">返回</string>
     <string name="string_instant_play">秒玩</string>
+    <string name="resend_code">获取验证码（%d秒）</string>
 </resources>

@@ -3,80 +3,120 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/top_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_login_top"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:alpha="0.2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:text="你好"
+        android:layout_marginTop="150dp"
+        android:textStyle="bold"
+        android:textSize="50sp"/>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请先登录"
+        android:layout_below="@+id/textView1"
+        android:textStyle="bold"
+        android:textSize="50sp"/>
+
     <LinearLayout
         android:id="@+id/linear1_userid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/textView2"
         android:layout_marginTop="50dp"
-        android:orientation="horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="用户ID"/>
-
-        <EditText
-            android:id="@+id/et_userid"
-            android:layout_marginStart="17dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="请输入用户ID"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear1_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linear1_userid"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户名"/>
-
-        <EditText
-            android:id="@+id/et_username"
-            android:layout_marginStart="17dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="请输入用户名"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear1_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linear1_username"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="手机号"/>
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/et_phone"
-            android:layout_marginStart="17dp"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:background="@drawable/rounded_corner"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:layout_height="wrap_content"
-            android:hint="请输入手机号"/>
+            android:inputType="number"
+            android:maxLines="1"
+            android:hint="手机号码"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_corner">
+            <EditText
+                android:id="@+id/et_user_code"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:inputType="number"
+                android:maxLines="1"
+                android:hint="验证码"/>
+
+            <Button
+                android:id="@+id/btn_get_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取验证码"
+                android:textColor="#fedb43"
+                android:enabled="false"
+                android:background="@android:color/transparent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_custom_radio_button" />
+            <TextView
+                android:id="@+id/tv_user_privacy"
+                android:layout_marginStart="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已阅读并同意《用户协议》与《隐私协议》。"
+                />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="200dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/bg_button_login"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:text="登录"
+            />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_below="@id/linear1_phone"
-        android:text="登录"
-        />
+
 
 
 </RelativeLayout>

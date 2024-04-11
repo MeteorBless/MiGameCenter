@@ -114,23 +114,6 @@ public class RetrofitManager {
         });
     }
 
-//    private boolean isLoading = false; // 标记是否正在加载数据
-//    private boolean isLastPage = false; // 标记是否已经到达最后一页
-//    // 获取isLoading的方法
-//    public boolean isLoading() {
-//        return isLoading;
-//    }
-//
-//    // 获取isLastPage的方法
-//    public boolean isLastPage() {
-//        return isLastPage;
-//    }
-
-//    private int pageSize = 10; // 默认每页大小为10
-//
-//    public int getPageSize() {
-//        return pageSize;
-//    }
 
 
 

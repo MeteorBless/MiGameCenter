@@ -1,70 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:id="@+id/item_game"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:layout_marginBottom="10dp"
-    android:layout_marginTop="10dp">
+    android:layout_height="match_parent"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="10dp">
 
-    <ImageView
-        android:id="@+id/game_icon_image_view"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        android:layout_marginStart="16.67dp"
-        />
-
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:orientation="horizontal"
+        >
 
-        <TextView
+        <ImageView
+            android:id="@+id/iv_back_to_home_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:id="@+id/game_name_text_view"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="start"
+            android:background="@drawable/icon_back"
+            android:contentDescription="@string/string_back" />
 
-            android:textAppearance="@style/style_game_name"
-            android:layout_marginBottom="5dp"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:id="@+id/game_icon_image_view"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:layout_marginStart="16.67dp"
             />
 
-        <TextView
-            android:layout_below="@+id/game_name_text_view"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_marginStart="10dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="5dp"
-            android:textAppearance="@style/style_game_brief"
-            android:id="@+id/brief_text_view"
-            />
+            android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/brief_text_view"
-            android:textAppearance="@style/style_game_tags"
-            android:id="@+id/tags_text_view"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:id="@+id/game_name_text_view"
 
+                android:textAppearance="@style/style_game_name"
+                android:layout_marginBottom="5dp"
+                />
 
-    </RelativeLayout>
+            <TextView
+                android:layout_below="@+id/game_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="@style/style_game_brief"
+                android:id="@+id/game_version_text_view"
+                android:text="版本号："
+                />
 
-    <Button
-        android:layout_width="47dp"
-        android:layout_height="25dp"
-        android:text="@string/string_instant_play"
-        android:textAppearance="@style/style_button_instant_play"
-        android:background="@drawable/bg_button_play"
-        android:layout_gravity="end"
-        android:layout_marginEnd="16.67dp"
+        </RelativeLayout>
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/app_introduction"
+    android:layout_marginBottom="20dp"
+    android:visibility="gone"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="应用介绍"
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+        android:layout_marginBottom="15dp"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_rounded_corener"
+        android:id="@+id/tv_app_introduction"/>
 
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/app_update"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="更新内容"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/grey_rounded_corener"
+            android:id="@+id/tv_app_update"/>
+
+    </LinearLayout>
 
 
 

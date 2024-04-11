@@ -14,8 +14,7 @@
         android:theme="@style/Theme.MiGameCenter"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-
+            android:name=".SplashActivity"
             android:exported="true"
             >
             <intent-filter>
@@ -25,7 +24,7 @@
             </intent-filter>
         </activity>
 
-<!--        <activity android:name=".MainActivity" android:launchMode="singleTop"/>-->
+        <activity android:name=".MainActivity" android:launchMode="singleTask"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".DetailActivity"/>
         <activity android:name=".LoginActivity"/>
