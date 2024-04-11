@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment{
 
     private int currentPage = 1;
 
-    private int PAGE_SIZE = 2;
+    private final int PAGE_SIZE = 2;
 
     private  boolean isLoading = false;
 
@@ -287,14 +287,14 @@ public class HomeFragment extends Fragment{
 
     // 缓存第一页数据到本地
     private void cacheFirstPageData(List<HomePageInfo> data) {
-    // 使用SharedPreferences缓存数据
-    SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("HomePageCache", Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-    Gson gson = new Gson();
-    String jsonData = gson.toJson(data);
-    editor.putString("firstPageData", jsonData);
-    editor.apply();
-}
+        // 使用SharedPreferences缓存数据
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("HomePageCache", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(data);
+        editor.putString("firstPageData", jsonData);
+        editor.apply();
+    }
 
     // 从本地加载缓存数据
     private List<HomePageInfo> loadCachedData() {
