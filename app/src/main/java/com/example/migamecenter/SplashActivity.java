@@ -1,6 +1,9 @@
 package com.example.migamecenter;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -16,12 +19,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
 
     private View privacyLayout;
@@ -30,6 +35,10 @@ public class SplashActivity extends AppCompatActivity {
 
     private ImageView iv_app_logo;
 
+    private SharedPreferences sharedPreferences;
+    private static final String AGREED_TO_PRIVACY_POLICY = "agreed_to_privacy_policy";
+
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +51,23 @@ public class SplashActivity extends AppCompatActivity {
 
         iv_app_logo = findViewById(R.id.app_logo);
 
+        relativeLayout = findViewById(R.id.relative_splash);
 
+        sharedPreferences = getSharedPreferences("Privacy_policy", Context.MODE_PRIVATE);
 
+        boolean hasAgreed = sharedPreferences.getBoolean(AGREED_TO_PRIVACY_POLICY, false);
+
+        if (hasAgreed) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Animation slideUp = AnimationUtils.loadAnimation(SplashActivity.this, R.anim.slide_up);
+                    relativeLayout.startAnimation(slideUp);
+                    navigateToMainActivity();
+                }
+            }, 1000); // 延迟2秒执行跳转操作
+            return;
+        }
 
 
         // 延迟执行动画，模拟闪屏页动画结束后显示隐私内容
@@ -55,6 +79,12 @@ public class SplashActivity extends AppCompatActivity {
         },1000);
 
 
+    }
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void showPrivacyContentWithAnimation() {
@@ -112,8 +142,10 @@ public class SplashActivity extends AppCompatActivity {
         btn_agree_and_use.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(AGREED_TO_PRIVACY_POLICY, true);
+                editor.apply();
+                navigateToMainActivity();
             }
         });
 

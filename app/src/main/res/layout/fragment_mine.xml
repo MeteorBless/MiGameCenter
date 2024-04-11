@@ -53,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="退出登录"
+        android:background="@drawable/bg_button_login"
         android:id="@+id/btn_log_out"
         android:layout_below="@+id/top_background"/>
 

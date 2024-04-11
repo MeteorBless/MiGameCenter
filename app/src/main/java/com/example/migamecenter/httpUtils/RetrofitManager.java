@@ -19,6 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// 没有用到
 public class RetrofitManager {
     private static final String TAG = "RetrofitManager";
     private static final String PRE_HTTP_URL = "https://hotfix-service-prod.g.mi.com";
