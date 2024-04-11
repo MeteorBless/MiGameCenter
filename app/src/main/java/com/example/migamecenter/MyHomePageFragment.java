@@ -107,6 +107,7 @@ public class MyHomePageFragment extends Fragment {
         super.onDestroyView();
         appLoginTextView = null;
         ivPersonalAvatar = null;
+        btnLogOut = null;
     }
 
     private void getUserInfo(){

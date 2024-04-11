@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 当 RadioButton 未选中时的样式 -->
+    <item android:drawable="@drawable/bg_button_login" android:state_enabled="true"/>
+    <!-- 当 RadioButton 选中时的样式 -->
+    <item android:drawable="@drawable/grey_rounded_corener" android:state_enabled="false"/>
+</selector>

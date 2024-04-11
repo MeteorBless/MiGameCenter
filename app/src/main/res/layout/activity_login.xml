@@ -108,9 +108,10 @@
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:background="@drawable/bg_button_login"
+            android:background="@drawable/bg_button_login_selector"
             android:textColor="#000000"
             android:textSize="20sp"
+            android:enabled="false"
             android:text="登录"
             />
 

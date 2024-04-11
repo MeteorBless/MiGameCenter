@@ -11,7 +11,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -122,6 +121,7 @@ public class LoginActivity extends FragmentActivity {
             public void afterTextChanged(Editable s) {
                 if (flag_phone_entered) {
                     getCodeButton.setEnabled(true);
+                    btn_login.setEnabled(true);
                 } else {
                     // 否则禁用获取验证码按钮
                     getCodeButton.setEnabled(false);
@@ -154,7 +154,7 @@ public class LoginActivity extends FragmentActivity {
                                     String code = extractCodeString(content);
                                     Log.i("LoginActivity","content"+content);
                                     Log.i("LoginActivity","content"+code);
-                                    if (code.equals("\"code\":400")){
+                                    if (code.equals("\"code\":200")){
                                         Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                                         //设置按钮不可点击
                                         btn_login.setEnabled(false);
@@ -241,8 +241,9 @@ public class LoginActivity extends FragmentActivity {
 
         if (getCodeButton.isEnabled()){
             String phoneNumber = et_phone.getText().toString().trim();
-            Toast.makeText(LoginActivity.this,"phoneNumber:"+phoneNumber,Toast.LENGTH_SHORT).show();
-//                    HttpManager.getInstance().sendCode(phoneNumber);
+//            Toast.makeText(LoginActivity.this,"phoneNumber:"+phoneNumber,Toast.LENGTH_SHORT).show();
+            Log.i("LoginActivity","开始发送验证码~~~");
+            HttpManager.getInstance().sendCode(phoneNumber);
         }
         // 禁用获取验证码按钮
         getCodeButton.setEnabled(false);
